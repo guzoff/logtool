@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import javafx.concurrent.Task;
 import org.guzoff.logtool.logio.DefLogWriter;
@@ -31,23 +30,24 @@ public class ReadAndGroupTask extends Task<String> {
     
     private final FilterPojo filter;
     private final GrouperPojo grouper;
-    private final int threads;
     private final File saveTo;
+    private final ExecutorService executor;
     
     /**
      * Constructs a ReadAndGroupTask object given filtering parameters, grouping
-     * parameters, number of threads and reference to the file for saving 
-     * resulting list of log records.
+     * parameters, reference to the file for saving resulting list of log records
+     * and {@code executor}.
      * @param filter POJO that holds filtering parameters
      * @param group POJO that holds grouping parameters
-     * @param threads number of {@code threads} for running {@link LogReadTask}s
      * @param saveTo reference to {@link File} for saving filtered logs
+     * @param executor {@link ExecutorService} instance
      */
-    public ReadAndGroupTask(FilterPojo filter, GrouperPojo group, int threads, File saveTo) {
+    public ReadAndGroupTask(FilterPojo filter, GrouperPojo group, 
+                            File saveTo, ExecutorService executor) {
         this.filter = filter;
         this.grouper = group;
-        this.threads = threads;
         this.saveTo = saveTo;
+        this.executor = executor;
     }
     
     /**
@@ -62,7 +62,6 @@ public class ReadAndGroupTask extends Task<String> {
         List<LogRecord> allRecordsList = new ArrayList<>();
         LogsProvider logsProvider = new DefLogsProvider();
         LogWriter out = new DefLogWriter(saveTo);
-        ExecutorService executor = Executors.newFixedThreadPool(threads);
         List<Future<List<LogRecord>>> futuresList = new ArrayList<>();
         String statistics = "";
         try {

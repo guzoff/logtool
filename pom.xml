@@ -4,7 +4,7 @@
 
     <groupId>org.guzoff</groupId>
     <artifactId>Logtool</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <packaging>jar</packaging>
 
     <name>Logtool</name>
