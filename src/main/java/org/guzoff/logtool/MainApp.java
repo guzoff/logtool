@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.Arrays;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.binding.When;
@@ -43,8 +45,8 @@ public class MainApp extends Application {
     
     private final FilterPojo filter = new FilterPojo();
     private final GrouperPojo grouper = new GrouperPojo();
-    private int threadsCount = 1;
     private File saveToFile = new File(System.getProperty("user.dir"), "result.log");
+    private ExecutorService executor = Executors.newFixedThreadPool(1);
     
     //filtering section
     private final DatePicker startDatePicker = new DatePicker();
@@ -83,7 +85,7 @@ public class MainApp extends Application {
     Service<String> service = new Service<String>() {
         @Override
         protected Task<String> createTask() {
-            return new ReadAndGroupTask(filter, grouper, threadsCount, saveToFile);
+            return new ReadAndGroupTask(filter, grouper, saveToFile, executor);
         }
     };
     
@@ -203,7 +205,8 @@ public class MainApp extends Application {
         dayRadioButton.setOnAction((a) -> grouper.setUnit(Units.DAY));
         
         //GUI block#3
-        threadsChoiceBox.setOnAction((a) -> threadsCount = (Integer) threadsChoiceBox.getValue());
+        threadsChoiceBox.setOnAction((a) -> executor = Executors
+                .newFixedThreadPool((Integer)threadsChoiceBox.getValue()));
         browseButton.setOnAction((a) -> {
             FileChooser fileChooser = new FileChooser();
             FileChooser.ExtensionFilter extFilter = 
