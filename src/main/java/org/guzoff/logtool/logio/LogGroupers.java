@@ -23,46 +23,16 @@ public class LogGroupers {
         boolean byUnit = grouper.isByTimeUnit();
         Units unit = grouper.getUnit();
         LogGrouper logGrouper = (List<LogRecord> list) -> Collections.emptyMap();
-        if (byUser && byUnit) {
+        if (byUnit) {
             switch (unit) {
                 case YEAR:
-                    logGrouper = (List<LogRecord> list) -> list.stream()
-                            .collect(Collectors.groupingBy((LogRecord rec) -> {
-                                return rec.getUsername() + " "
-                                    + rec.getDateTime().toString().substring(0, 4);
-                            }));
+                    logGrouper = getGrouperMethod(byUser, 4);
                     break;
                 case MONTH:
-                    logGrouper = (List<LogRecord> list) -> list.stream()
-                            .collect(Collectors.groupingBy((LogRecord rec) -> {
-                                return rec.getUsername() + " "
-                                    + rec.getDateTime().toString().substring(0, 7);
-                            }));
+                    logGrouper = getGrouperMethod(byUser, 7);
                     break;
                 case DAY:
-                    logGrouper = (List<LogRecord> list) -> list.stream()
-                            .collect(Collectors.groupingBy((LogRecord rec) -> {
-                                return rec.getUsername() + " "
-                                    + rec.getDateTime().toString().substring(0, 10);
-                            }));
-                    break;
-            }
-        } else if (byUnit) {
-            switch (unit) {
-                case YEAR:
-                    logGrouper = (List<LogRecord> list) -> list.stream()
-                            .collect(Collectors.groupingBy((LogRecord rec) -> 
-                                rec.getDateTime().toString().substring(0, 4)));
-                    break;
-                case MONTH:
-                    logGrouper = (List<LogRecord> list) -> list.stream()
-                            .collect(Collectors.groupingBy((LogRecord rec) -> 
-                                rec.getDateTime().toString().substring(0, 7)));
-                    break;
-                case DAY:
-                    logGrouper = (List<LogRecord> list) -> list.stream()
-                            .collect(Collectors.groupingBy((LogRecord rec) -> 
-                                rec.getDateTime().toString().substring(0, 10)));
+                    logGrouper = getGrouperMethod(byUser, 10);
                     break;
             }
         } else if (byUser) {
@@ -71,6 +41,20 @@ public class LogGroupers {
                                   rec.getUsername()));
         }
         return logGrouper;
+    }
+
+    private static LogGrouper getGrouperMethod(boolean byUser, int ind) {
+        if (byUser) {
+            return (List<LogRecord> list) -> list.stream()
+                    .collect(Collectors.groupingBy((LogRecord rec) -> {
+                        return rec.getUsername() + " "
+                                + rec.getDateTime().toString().substring(0, ind);
+                    }));
+        } else {
+            return (List<LogRecord> list) -> list.stream()
+                            .collect(Collectors.groupingBy((LogRecord rec) -> 
+                                rec.getDateTime().toString().substring(0, ind)));
+        }
     }
 
 }
