@@ -24,5 +24,3 @@ There are some interfaces for that purpose there:
 All you need to do after implementing one or more of them is to edit corresponding lines
 in files _LogReadTask.java_ and _ReadAndGroupTask.java_ (or just create your own version
 of Task and wrap it into the Service object in _MainApp.java_ file).
-
-At least I think all should work like that =)
