@@ -10,7 +10,7 @@ import java.util.List;
 public interface LogWriter {
     
     /**
-     * This method converts the log records to strings and writes them to the file.
+     * This method converts log records to strings and writes them to a file.
      * @param list list of the log records
      * @return number of records written
      * @throws IOException if it cannot write to the file

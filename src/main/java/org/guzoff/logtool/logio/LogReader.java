@@ -11,8 +11,8 @@ import java.util.List;
 public interface LogReader {
     
     /**
-     * This method provides reading and converting log file into list of
-     * log records.
+     * This method provides reading and converting a log file into the
+     * list of log records.
      * @return list of {@link LogRecord} objects
      * @throws IOException if it cannot read the log file
      */

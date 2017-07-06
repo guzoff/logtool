@@ -15,14 +15,12 @@ Additionally you can choose the number of threads for log files reading.
 A small log I/O library is available in the main package of the app.
 You can use it to implement your own versions of log files.
 There are some interfaces for that purpose there: 
-- _LogRecord_ 
-- _LogReader_
-- _LogWriter_
-- _LogsProvider_
-- _LogGrouper_
+- [_LogRecord_](https://github.com/guzoff/logtool/blob/master/src/main/java/org/guzoff/logtool/logio/LogRecord.java) 
+- [_LogReader_](https://github.com/guzoff/logtool/blob/master/src/main/java/org/guzoff/logtool/logio/LogReader.java)
+- [_LogWriter_](https://github.com/guzoff/logtool/blob/master/src/main/java/org/guzoff/logtool/logio/LogWriter.java)
+- [_LogsProvider_](https://github.com/guzoff/logtool/blob/master/src/main/java/org/guzoff/logtool/logio/LogsProvider.java)
+- [_LogGrouper_](https://github.com/guzoff/logtool/blob/master/src/main/java/org/guzoff/logtool/logio/LogGrouper.java)
 
 All you need to do after implementing one or more of them is to edit corresponding lines
 in files _LogReadTask.java_ and _ReadAndGroupTask.java_ (or just create your own version
 of Task and wrap it into the Service object in _MainApp.java_ file).
-
-At least I think all should work like that =)
