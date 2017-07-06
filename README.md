@@ -1,7 +1,7 @@
 # logtool
 Simple JavaFX application for log files processing
 
-This app lets you filter log records by specified criteria and save the result into the file.
+This app lets you filter log records by specified criteria and save the result into a file.
 It also prints aggregated statistics (records count) depending on grouping parameters been set.
 Additionally you can choose the number of threads for log files reading.
 
@@ -23,4 +23,4 @@ of Task and wrap it into the Service object in _MainApp.java_ file).
 This tool scans the log folder in the root app directory. 
 So if you want to test it, you should unpack [**Logs.zip**](https://github.com/guzoff/logtool/blob/master/Logs.zip) 
 archive into the folder where **Logtool-0.1.1.jar** file will be, after you have built it 
-(by default it will have been built in **_target/_** folder) or downloaded from [_here_](https://github.com/guzoff/logtool/releases/download/v.0.1.1/Logtool-0.1.1.jar).
+(by default it will have been built in **_target/_** folder) or downloaded it from [**here**](https://github.com/guzoff/logtool/releases/download/v.0.1.1/Logtool-0.1.1.jar).
